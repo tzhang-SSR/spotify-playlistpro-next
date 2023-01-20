@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { getAccessToken } from "../../lib/util";
+import PlaylistTable from "../../components/PlaylistTable";
 
 const Playlist = () => {
   const router = useRouter();
@@ -39,16 +40,22 @@ const Playlist = () => {
           </div>
         </div>
         <div className="p-5">
-          {data?.tracks &&
+          {data?.tracks?.items.length > 0 && (
+            <PlaylistTable playlistItems={data.tracks.items} />
+          )}
+          {/* {data?.tracks &&
             data.tracks.items.map((item: any) => (
-              <div className="flex py-3" key={item.added_at}>
+              <div
+                className="grid grid-cols-[80px_minmax(500px,_1fr)_minmax(500px,_1fr)_1fr_1fr] py-3 gap-3"
+                key={item.added_at}
+              >
                 <img
                   src={item.track.album.images[2].url}
                   alt={`${item.track.name} cover`}
                 />
-                <div className="pl-2">
-                  <p>{item.track.name}</p>
-                  <p>
+                <div className="pl-2 ">
+                  <p className="truncate">{item.track.name}</p>
+                  <p className="truncate">
                     {item.track.artists.map((artist: any, index: number) => (
                       <span className="pr-2" key={artist.id}>
                         {index === item.track.artists.length - 1
@@ -58,8 +65,11 @@ const Playlist = () => {
                     ))}
                   </p>
                 </div>
+                <div className="truncate">{item.track.album.name}</div>
+                <div>{item.added_at}</div>
+                <div>{item.track.duration_ms}</div>
               </div>
-            ))}
+            ))} */}
         </div>
       </div>
     </div>
